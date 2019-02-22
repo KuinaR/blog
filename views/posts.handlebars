@@ -1,0 +1,8 @@
+<h1>Posts publicados</h1>
+{{#each posts}}
+    <p>{{contenido}}</p>
+{{/each}}
+<form action="/posts" method="post">
+    <textarea name="newPost" id="newPost" cols="30" rows="10"></textarea><br/><br/>
+    <input type="submit">
+</form>
