@@ -1,7 +1,11 @@
 <h1>Posts publicados</h1>
+<a href="/posts/new"><button>New</button></a>
 {{#each posts}}
     <p>{{contenido}}</p>
+    <a href={{goto}}><button>Edit</button></a>
+    <a href={{gotopost}}><button>Ver post</button></a>
 {{/each}}
+<br/><br/>
 <form action="/posts" method="post">
     <textarea name="newPost" id="newPost" cols="30" rows="10"></textarea><br/><br/>
     <input type="submit">

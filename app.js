@@ -17,31 +17,54 @@ app.get('/', function(req, res) {
 });
 
 app.get('/posts', function (req, res) {
-   /*var links = [
-        {
-            name: "Game",
-            link: "/Game"
-        },
-        {
-            name: "About",
-            link: "/About"
-        }
-    ];*/
-    var posts = [];
+   var posts = [];
     for(let i = 0; i < publishedPosts.length; i++){
-       posts.push({contenido: publishedPosts[i]})
+       posts.push(
+           {contenido: publishedPosts[i],
+            goto: "/posts/edit/" + i,
+            gotopost: "/posts/" + i
+        })
     }
     res.render('posts', {layout: 'main', posts: posts});
 });
 
 app.post('/posts', function(req, res){
-    console.log(req.body.newPost);
-    publishedPosts.push(req.body.newPost);
+    if(req.body.newPost != null){
+        publishedPosts.push(req.body.newPost);
+    }
+    else if(req.body.editPost != null){
+        var id = req.body.idPost;
+        publishedPosts[id] = req.body.editPost;
+    }
     var posts = [];
     for(let i = 0; i < publishedPosts.length; i++){
-        posts.push({contenido: publishedPosts[i]})
+        posts.push(
+            {contenido: publishedPosts[i],
+             goto: "/posts/edit/" + i,
+             gotopost: "/posts/" + i
+         })
     }
     res.render('posts', {layout: 'main', posts: posts});
 })
- 
+
+app.get('/posts/new', function(req, res){
+    var post = publishedPosts[publishedPosts.length - 1];
+    res.render('new', {layout: 'main', contenido: post});
+})
+
+app.get('/posts/edit/:postid', function(req,res){
+    var id = req.params.postid;
+    res.render('edit', {layout: 'main', editableText: publishedPosts[id], id: id});
+})
+
+app.get("/posts/:postid", function(req, res) {
+    var id = req.params.postid;
+    if(id >= 0 && id < publishedPosts.length){
+        res.render('select', {layout: 'main', contenido: publishedPosts[id]});
+    }
+    else{
+        res.render('select', {layout: 'main', contenido: "Este post no existe"});
+    }
+});
+
 app.listen(3000);
