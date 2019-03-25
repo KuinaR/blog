@@ -1,7 +1,9 @@
 <h1>Posts publicados</h1>
 <a href="/posts/new"><button>New</button></a>
 {{#each posts}}
+    <h3>{{title}}</h3>
     <p>{{contenido}}</p>
+    <p>{{date}}</p>
     <a href={{goto}}><button>Edit</button></a>
     <a href={{gotopost}}><button>Ver post</button></a>
 {{/each}}
